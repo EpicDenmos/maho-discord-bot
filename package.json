@@ -1,0 +1,14 @@
+{
+    "name": "maho-discord-bot",
+    "version": "1.0.0",
+    "description": "Bot Discord pour Maho",
+    "author": "Guillaume Escanyé <guillaume.escanye@gmail.com>",
+    "main": "maho-bot.js",
+    "scripts": {
+        "start": "node maho-bot.js"
+    },
+    "dependencies": {
+        "discord.js": "^11.1.0",
+        "requestify": "^0.2.5"
+    }
+}
