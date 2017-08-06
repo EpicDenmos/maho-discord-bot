@@ -50,7 +50,9 @@ function checkStream() {
             if(typeof(isStreamOnline) !== 'undefined' && !isStreamOnline) {
                 // Stream has come online, send message
                 console.log("stream online");
-                bot.channels.filter(chan => chan.name === 'general').first().send(streamNotifMsg);
+                bot.channels.filter(chan => chan.name === 'general').forEach(function(channel){
+                    channel.send(streamNotifMsg);
+                });
             }
             isStreamOnline = true;
         }     
