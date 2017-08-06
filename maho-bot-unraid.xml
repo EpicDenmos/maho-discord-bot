@@ -13,16 +13,6 @@
     <Registry>https://registry.hub.docker.com/u/epicdenmos/maho-discord-bot/</Registry>
     <GitHub>https://github.com/EpicDenmos/maho-discord-bot</GitHub>
     <Repository>epicdenmos/maho-discord-bot</Repository>
-    <Networking>
-        <Mode>bridge</Mode>
-        <Publish>
-        <Port>
-            <HostPort>8080</HostPort>
-            <ContainerPort>8080</ContainerPort>
-            <Protocol>tcp</Protocol>
-        </Port>
-        </Publish>
-    </Networking>
     <Icon>https://raw.githubusercontent.com/epicdenmos/maho-discord-bot/master/images/maho.png</Icon>
     <ExtraParams></ExtraParams>
 </Containers>
