@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
 const requestify = require('requestify'); 
+var MessageFormat = require('messageformat');
+var mf = new MessageFormat('en');
 
 const bot = new Discord.Client();
 
@@ -7,8 +9,7 @@ const config = require("./config.json");
 
 bot.on("ready", () => {
     console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`); 
-    // Example of changing the bot's playing game to something useful. `client.user` is what the
-    // docs refer to as the "ClientUser".
+
     bot.user.setGame(`Love Maho <3 !`);
 });
 
@@ -25,7 +26,24 @@ bot.on("message", message => {
         var msg = "@everyone Les personnes qui ne l'ont pas encore fait, merci de lier vos profils Discord/Twitch (Paramètres Utilisateurs/Connexion/Cliquer sur le logo Twitch) pour avoir le statut \"Twitch Sub\" sur le serveur.   Merci à tous de le faire pour me faciliter la tâche merci beaucoup et accessoirement le rang sub ne vous sera pas attriber sans cette manip.";
         message.channel.send(msg);
     }
+
 });
+
+
+/**
+ * Greeting message for new members
+ */
+var welcomeMsg = mf.compile('Bienvenue {NAME} sur le discord du Fail :wink:  ! Pense à lire les règles du discord stp #regles  Merci !');
+
+bot.on("guildMemberAdd", member => {
+    // Only active greetings for Maho Discord
+    if(member.guild.name === 'MahO_Tv') {
+        member.guild.channels.filter(chan => chan.name === 'general').forEach(function(channel) {
+            channel.send(welcomeMsg({ NAME : member.user.username }));
+        });
+    }
+});
+
 
 
 bot.login(config.token);
