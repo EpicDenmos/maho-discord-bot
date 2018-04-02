@@ -6,6 +6,9 @@ var mf = new MessageFormat('en');
 const bot = new Discord.Client();
 
 const config = require("./config.json");
+const REQUIRED_TWITCH_CHECK = 3;
+var currentTwitchCheck = 0;
+var isStreamOnline = false;
 
 bot.on("ready", () => {
     console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`); 
@@ -63,17 +66,23 @@ function checkStream() {
     requestify.get(checkStreamUrl).then(function(response) {            
         if(response.getBody().stream === null) {
             isStreamOnline = false;
+            currentTwitchCheck = 0;
         }
         else {
             if(typeof(isStreamOnline) !== 'undefined' && !isStreamOnline) {
-                // Stream has come online, send message
-                console.log("stream online");
-                var streamNotifMsg = '@everyone MahO vient de commencer à streamer ! Au menu aujourd\'hui : ' + response.getBody().stream.channel.status + '. Retrouvez le sur Twitch : https://www.twitch.tv/maho_tv';
-                bot.channels.filter(chan => chan.name === 'general').forEach(function(channel){
-                    channel.send(streamNotifMsg);
-                });
-            }
-            isStreamOnline = true;
+                
+                currentTwitchCheck += 1;
+                
+                if(currentTwitchCheck >= REQUIRED_TWITCH_CHECK) {
+                    // Stream has come online, send message
+                    var streamNotifMsg = '@everyone MahO vient de commencer à streamer ! Au menu aujourd\'hui : ' + response.getBody().stream.channel.status + '. Retrouvez le sur Twitch : https://www.twitch.tv/maho_tv';
+                    bot.channels.filter(chan => chan.name === 'info-live').forEach(function(channel){
+                        channel.send(streamNotifMsg);
+                    });
+
+                    isStreamOnline = true;
+                }
+            }            
         }     
     });
 }
