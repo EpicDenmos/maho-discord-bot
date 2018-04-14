@@ -5,7 +5,7 @@ var mf = new MessageFormat('en');
 
 const bot = new Discord.Client();
 
-const config = require("./config.json");
+const config = require("/mahobot/config.json");
 const REQUIRED_TWITCH_CHECK = 3;
 var currentTwitchCheck = 0;
 var isStreamOnline = false;
@@ -56,9 +56,7 @@ bot.login(config.token);
 /**
  * TWITCH STUFF 
  */
-
-var STREAMER_ID = 'MahO_Tv';
-var checkStreamUrl = 'https://api.twitch.tv/kraken/streams/'+STREAMER_ID+'?client_id=4vvo62clzhydthffekuubxdubj33t5';
+var checkStreamUrl = 'https://api.twitch.tv/kraken/streams/'+config.streamerId+'?client_id='+config.twitchClientId;
 
 
 
